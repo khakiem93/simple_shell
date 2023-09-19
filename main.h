@@ -16,4 +16,6 @@ char *get_path(char *command);
 char *_strcat(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
 char *_getenv(char *name);
+char *_strdup(char *str);
+int _atoi(char *s);
 #endif
