@@ -18,4 +18,5 @@ int _strcmp(char *s1, char *s2);
 char *_getenv(char *name);
 char *_strdup(char *str);
 int _atoi(char *s);
+char **read_command_tokens(ssize_t charsRead, char *input);
 #endif

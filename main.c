@@ -23,12 +23,10 @@ int main(int argc, char **argv)
 			print_string("exit\n");
 			return (-1);
 		}
-
+		argv = read_command_tokens(charsRead, input);
 		_execCommand(argv);
-
 		print_string(input);
 		print_string("\n");
-
 	}
 	free(input);
 	free(argv);
@@ -36,13 +34,13 @@ int main(int argc, char **argv)
 }
 /**
  * read_command_tokens - tokenize command token
- * @argv: arg values
  * @charsRead: number of char read
  * @input: input command
- * Return: void
+ * Return: argv
  */
-void read_command_tokens(char **argv, ssize_t charsRead, char *input)
+char **read_command_tokens(ssize_t charsRead, char *input)
 {
+	char **argv = NULL;
 	char *inputCp;
 	char *tokens;
 	int i, nTokens = 0;
@@ -54,7 +52,6 @@ void read_command_tokens(char **argv, ssize_t charsRead, char *input)
 		perror("allocation error");
 	}
 	_strcpy(inputCp, input);
-
 	tokens = strtok(input, delim);
 
 	while (tokens != NULL)
@@ -70,12 +67,13 @@ void read_command_tokens(char **argv, ssize_t charsRead, char *input)
 
 	for (i = 0; tokens != NULL; i++)
 	{
+		
 		argv[i] = malloc(sizeof(char) * _strlen(tokens));
 		_strcpy(argv[i], tokens);
-
 		tokens = strtok(NULL, delim);
 	}
 	argv[i] = NULL;
 
 	free(inputCp);
+	return (argv);
 }
