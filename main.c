@@ -67,7 +67,6 @@ char **read_command_tokens(ssize_t charsRead, char *input)
 
 	for (i = 0; tokens != NULL; i++)
 	{
-		
 		argv[i] = malloc(sizeof(char) * _strlen(tokens));
 		_strcpy(argv[i], tokens);
 		tokens = strtok(NULL, delim);
