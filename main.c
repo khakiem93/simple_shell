@@ -9,7 +9,7 @@
 int main(int argc, char **argv)
 {
 	char *prompt = "$ ";
-	char *input;
+	char *input = NULL;
 	size_t n = 0;
 	int status = 0;
 	ssize_t charsRead;
@@ -17,7 +17,8 @@ int main(int argc, char **argv)
 	(void)argv;
 	while (1)
 	{
-		print_string(prompt);
+		if (isatty(STDIN_FILENO))
+			print_string(prompt);
 		charsRead = getline(&input, &n, stdin);
 		if (charsRead == -1)
 		{
@@ -41,12 +42,13 @@ int main(int argc, char **argv)
 char **read_command_tokens(ssize_t charsRead, char *input)
 {
 	char **argv = NULL;
-	char *inputCp;
-	char *tokens;
+	char *inputCp = NULL;
+	char *tokens = NULL;
 	int i, nTokens = 0;
 	const char *delim = " \n";
 
-	inputCp = malloc(sizeof(char) * charsRead);
+	inputCp = malloc((sizeof(char) * charsRead) + 1);
+
 	if (inputCp == NULL)
 	{
 		perror("allocation error");
@@ -61,7 +63,7 @@ char **read_command_tokens(ssize_t charsRead, char *input)
 	}
 	nTokens++;
 
-	argv = malloc(sizeof(char *) * nTokens);
+	argv = malloc((sizeof(char *) * nTokens) + 1);
 
 	tokens = strtok(inputCp, delim);
 
@@ -72,7 +74,7 @@ char **read_command_tokens(ssize_t charsRead, char *input)
 		tokens = strtok(NULL, delim);
 	}
 	argv[i] = NULL;
-
+	free(tokens);
 	free(inputCp);
 	return (argv);
 }
