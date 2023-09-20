@@ -11,6 +11,7 @@ int main(int argc, char **argv)
 	char *prompt = "$ ";
 	char *input;
 	size_t n = 0;
+	int status = 0;
 	ssize_t charsRead;
 	(void)argc;
 	(void)argv;
@@ -24,13 +25,12 @@ int main(int argc, char **argv)
 			return (-1);
 		}
 		argv = read_command_tokens(charsRead, input);
-		_execCommand(argv);
-		print_string(input);
-		print_string("\n");
+		status = _execCommand(argv);
+		free(input);
+		free(argv);
+		wait(&status);
 	}
-	free(input);
-	free(argv);
-	return (0);
+	return (status);
 }
 /**
  * read_command_tokens - tokenize command token
