@@ -8,20 +8,17 @@
  */
 void _strcpy(char *dest, char *src)
 {
-	int l = 0;
-	int x = 0;
+	int i = 0;
 
-	while (*(src + l) != '\0')
+	while (src[i])
 	{
-		l++;
+		dest[i] = src[i];
+		i++;
 	}
-	for (; x < l; x++)
-	{
-		dest[x] = src[x];
-	}
-	dest[l] = '\0';
+	dest[i] = '\0';
+
 }
-/**
+/**	
  * _strlen - returns the length of a string
  * @s: string
  * Return: length

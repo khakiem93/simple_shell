@@ -27,10 +27,10 @@ int main(int argc, char **argv)
 		}
 		argv = read_command_tokens(charsRead, input);
 		status = _execCommand(argv);
-		free(input);
-		free(argv);
 		wait(&status);
 	}
+	free(input);
+	free(argv);
 	return (status);
 }
 /**
